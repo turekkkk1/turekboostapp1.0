@@ -32,7 +32,7 @@
     "publish": {
       "provider": "github",
       "owner": "turekkkk1",
-      "repo": "turekboost",
+      "repo": "turekboostapp1.0",
       "releaseType": "prerelease"
     },
     "files": [
