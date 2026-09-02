@@ -1,0 +1,42 @@
+{
+  "name": "turekboost",
+  "version": "1.1.0-beta.1",
+  "description": "Network analyzer i PC boost dla graczy",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:portable": "electron-builder --dir --config.win.signAndEditExecutable=false"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron-updater": "^6.6.2",
+    "ping": "^1.0.0",
+    "systeminformation": "^5.33.7"
+  },
+  "devDependencies": {
+    "electron": "^44.1.1",
+    "electron-builder": "^25.1.8",
+    "electron-updater": "^6.6.2",
+    "rcedit": "^5.0.2"
+  },
+  "build": {
+    "appId": "com.turekboost.app",
+    "productName": "TurekBoost",
+    "executableName": "TurekBoost",
+    "win": {
+      "target": "nsis",
+      "icon": "src/renderer/assets/turekboost-icon.ico"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "turekkkk1",
+      "repo": "turekboost",
+      "releaseType": "prerelease"
+    },
+    "files": [
+      "src/**/*"
+    ]
+  }
+}

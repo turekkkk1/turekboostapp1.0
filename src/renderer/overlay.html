@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline';" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; font-family: Bahnschrift, Segoe UI, sans-serif; }
+  body { -webkit-app-region: drag; padding: 10px; }
+  .overlay { display: flex; align-items: center; gap: 12px; height: 56px; padding: 10px 13px; border-radius: 12px; background: rgba(11, 18, 21, .9); box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 0 0 1px rgba(99, 229, 196, .18); }
+  .dot { width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%; background: #8fa39f; }
+  .dot.live { background: #63e5c4; box-shadow: 0 0 12px #63e5c4; }
+  .label { display: flex; flex-direction: column; gap: 2px; color: #8fa39f; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .value { color: #f1f6f3; font: 700 17px Consolas, monospace; letter-spacing: 0; }
+  .metric { display: flex; flex-direction: column; gap: 2px; }
+  .metric small { color: #8fa39f; font: 10px Consolas, monospace; }
+  .metric strong { color: #63e5c4; font: 700 15px Consolas, monospace; }
+</style>
+</head>
+<body>
+  <div class="overlay"><span id="dot" class="dot"></span><div class="label">TurekBoost<span id="status" class="value">Brak testu</span></div><div class="metric"><small>PING</small><strong id="ping">--</strong></div><div class="metric"><small>JITTER</small><strong id="jitter">--</strong></div><div class="metric"><small>LOSS</small><strong id="loss">--</strong></div></div>
+  <script>
+    function renderStats(stats) {
+      document.getElementById('dot').classList.add('live');
+      document.getElementById('status').textContent = stats.alive ? 'Na żywo' : 'Brak odpowiedzi';
+      document.getElementById('ping').textContent = stats.current === null ? '--' : `${stats.current.toFixed(0)} ms`;
+      document.getElementById('jitter').textContent = `${stats.jitter.toFixed(1)} ms`;
+      document.getElementById('loss').textContent = `${stats.loss}%`;
+    }
+    let pingInProgress = false;
+    async function refreshOverlayPing() {
+      if (pingInProgress) return;
+      pingInProgress = true;
+      renderStats(await window.api.getOverlayPing());
+      pingInProgress = false;
+    }
+    refreshOverlayPing();
+    setInterval(refreshOverlayPing, 1000);
+    window.api.onOverlayReset(() => {
+      document.getElementById('dot').classList.remove('live');
+      document.getElementById('status').textContent = 'Brak aktywnego testu';
+      document.getElementById('ping').textContent = '--';
+      document.getElementById('jitter').textContent = '--';
+      document.getElementById('loss').textContent = '--';
+    });
+  </script>
+</body>
+</html>

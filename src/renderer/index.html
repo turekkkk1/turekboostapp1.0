@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:;" />
+<title>TurekBoost</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="window-bar">
+    <div class="window-drag"><img src="assets/turekboost-logo.png" alt="" /><span>TurekBoost</span></div>
+    <div class="window-controls">
+      <button id="windowMinimize" aria-label="Minimalizuj"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+      <button id="windowClose" class="window-close" aria-label="Zamknij"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+    </div>
+  </header>
+  <div class="app">
+    <nav class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="assets/turekboost-logo.png" alt="TurekBoost" />
+        <span class="brand-name">TurekBoost</span>
+      </div>
+
+      <div class="nav-group">
+        <button class="nav-item active" data-view="home">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z" /></svg></span>
+          Start
+        </button>
+        <button class="nav-item" data-view="analyzer">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h3l2-6 4 12 2-6h7" /></svg></span>
+          Analiza sieci
+        </button>
+        <button class="nav-item" data-view="boost">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" /><path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7L19 16Z" /></svg></span>
+          PC Boost
+        </button>
+        <button class="nav-item" data-view="history">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3.5 2" /></svg></span>
+          Historia sesji
+        </button>
+        <button class="nav-item" data-view="games">
+          <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 9h10a4 4 0 0 1 3.8 5.2l-1 3.2a2 2 0 0 1-3.5.7L14 16H10l-2.3 2.1a2 2 0 0 1-3.5-.7l-1-3.2A4 4 0 0 1 7 9Z" /><path d="M7 12v4M5 14h4M16 13h.01M19 15h.01" /></svg></span>
+          Gry
+        </button>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="themeToggle" class="nav-item utility-btn">Motyw: ciemny</button>
+        <label class="setting-row"><input id="alertToggle" type="checkbox" checked /> Alerty sieciowe</label>
+        <label class="setting-row"><input id="autostartToggle" type="checkbox" /> Start z Windowsem</label>
+        <div class="status-line">
+          <span id="connStatus" class="status-pill idle">Bezczynny</span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="content">
+
+      <!-- HOME VIEW -->
+      <section id="view-home" class="view active">
+        <div class="home-intro">
+          <img class="home-logo" src="assets/turekboost-logo.png" alt="TurekBoost" />
+          <p class="eyebrow">Twój asystent sieciowy dla graczy</p>
+          <div class="home-title-row"><h1>TurekBoost</h1><span class="beta-badge">WERSJA BETA</span></div>
+          <p class="home-description">Pomaga sprawdzić jakość połączenia, znaleźć źródło problemu i przygotować komputer do gry.</p>
+          <a class="developer-link" href="https://guns.lol/turekkk" target="_blank" rel="noreferrer">Developer: guns.lol/turekkk ↗</a>
+        </div>
+        <div class="home-sections">
+          <button class="home-card home-card-feature" id="fullTestHomeBtn" type="button"><span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0Z" /><path d="m12 7 1.6 3.4L17 12l-3.4 1.6L12 17l-1.6-3.4L7 12l3.4-1.6L12 7Z" /></svg></span><span><strong>Test automatyczny</strong><small>Ping, prędkość, trasa i połączenie w jednym raporcie</small></span><b>→</b></button>
+          <button class="home-card" data-open-view="analyzer"><span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h3l2-6 4 12 2-6h7" /></svg></span><span><strong>Analiza sieci</strong><small>Ping, jitter, loss i diagnostyka trasy</small></span><b>→</b></button>
+          <button class="home-card" data-open-view="games"><span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 9h10a4 4 0 0 1 3.8 5.2l-1 3.2a2 2 0 0 1-3.5.7L14 16H10l-2.3 2.1a2 2 0 0 1-3.5-.7l-1-3.2A4 4 0 0 1 7 9Z" /><path d="M7 12v4M5 14h4M16 13h.01M19 15h.01" /></svg></span><span><strong>Gry</strong><small>Presety regionów i test jakości serwera</small></span><b>→</b></button>
+          <button class="home-card" data-open-view="boost"><span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" /><path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7L19 16Z" /></svg></span><span><strong>PC Boost</strong><small>Zasoby komputera i szybkie optymalizacje</small></span><b>→</b></button>
+          <button class="home-card" data-open-view="history"><span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3.5 2" /></svg></span><span><strong>Historia sesji</strong><small>Porównuj wyniki i zachowuj dowody problemu</small></span><b>→</b></button>
+        </div>
+        <p class="home-note">Projekt powstał, aby szybciej rozpoznać, czy problem z grą wynika z Wi-Fi, komputera, operatora czy trasy do serwera.</p>
+        <section class="discord-banner" aria-labelledby="discordTitle">
+          <div class="discord-mark"><img src="assets/Discord-Symbol-White.png" alt="" /></div>
+          <div class="discord-copy">
+            <p class="eyebrow">Społeczność TurekBoost</p>
+            <h2 id="discordTitle">Dołącz do naszego Discorda</h2>
+            <p>Porozmawiaj z innymi graczami, podziel się wynikami testów i otrzymaj pomoc przy problemach z siecią.</p>
+          </div>
+          <button id="joinDiscord" class="btn btn-primary" type="button">Dołącz do Discorda <span aria-hidden="true">↗</span></button>
+        </section>
+        <section class="system-status-card" aria-labelledby="systemStatusTitle">
+          <div class="panel-heading"><span id="systemStatusTitle">Stan systemu</span><span id="appVersion" class="panel-kicker">WERSJA —</span></div>
+          <div class="system-status-grid">
+            <span><b id="systemStatusDot" class="system-status-dot"></b><strong id="systemStatusText">Sprawdzam stan komputera…</strong></span>
+            <span id="systemStatusDetails">CPU, pamięć i temperatury</span>
+          </div>
+          <div class="system-status-actions"><button id="refreshSystemStatus" class="btn btn-outline">Odśwież stan</button><button id="checkUpdatesBtn" class="btn btn-outline">Sprawdź aktualizacje</button><button id="exportLogsBtn" class="btn btn-ghost">Eksportuj logi</button></div>
+          <p id="updateStatus" class="system-status-details" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <!-- GAMES VIEW -->
+      <section id="view-games" class="view">
+        <header class="view-header games-header">
+          <div>
+            <p class="eyebrow">Twoje profile</p>
+            <h1>Wybierz grę</h1>
+            <p class="subtitle">Otwórz panel dopasowany do konkretnej gry i jej regionu.</p>
+          </div>
+          <span id="gamesProcessStatus" class="process-status">Skanowanie procesów…</span>
+        </header>
+        <div id="gameTiles" class="game-tiles"></div>
+      </section>
+
+      <!-- GAME DETAIL VIEW -->
+      <section id="view-game-detail" class="view">
+        <button id="backToGames" class="back-link">← Wszystkie gry</button>
+        <header class="game-hero">
+          <div id="gameHeroArt" class="game-hero-art"><img id="gameHeroImage" alt="" /><span id="gameHeroInitials"></span></div>
+          <div>
+            <p class="eyebrow">Panel gry</p>
+            <h1 id="gameDetailTitle">Gra</h1>
+            <p id="gameDetailSubtitle" class="subtitle">Wybierz region i rozpocznij pomiar.</p>
+          </div>
+          <span id="gameDetailProcess" class="process-status">Proces nieaktywny</span>
+        </header>
+        <div class="game-detail-grid">
+          <div class="detail-panel">
+            <div class="panel-heading"><span>Cel pomiaru</span><span class="panel-kicker">REGION</span></div>
+            <label class="field">
+              <span class="field-label">Serwer</span>
+              <select id="gameDetailRegion"></select>
+            </label>
+            <div id="gameDetailHost" class="host-preview"></div>
+            <button id="gameDetailMonitor" class="btn btn-primary full-btn">Start pomiaru</button>
+            <button id="gameBenchmark" class="btn btn-outline full-btn">Znajdź najlepszy region</button>
+            <button id="gameMode" class="btn btn-outline full-btn">Włącz Game Mode</button>
+          </div>
+          <div class="detail-panel detail-status-panel">
+            <div class="panel-heading"><span>Stan połączenia</span><span id="gameDetailStatus" class="status-dot-label">GOTOWE</span></div>
+            <div class="detail-metrics">
+              <div><small>Ping</small><strong id="gamePing">—</strong><em>ms</em></div>
+              <div><small>Jitter</small><strong id="gameJitter">—</strong><em>ms</em></div>
+              <div><small>Loss</small><strong id="gameLoss">—</strong><em>%</em></div>
+            </div>
+            <div id="gameDiagnosis" class="game-diagnosis">Uruchom pomiar, aby otrzymać diagnozę.</div>
+          </div>
+        </div>
+        <div class="action-row game-actions">
+          <button id="gameTrace" class="btn btn-outline">Traceroute</button>
+          <button id="gameSpeed" class="btn btn-outline">Test łącza</button>
+          <button id="gameExport" class="btn btn-ghost">Eksport sesji</button>
+        </div>
+        <pre id="gameDiagnosticOutput" class="diagnostic-output"></pre>
+        <section class="detail-panel game-history-panel">
+          <div class="panel-heading"><span>Ostatnie sesje tej gry</span><span class="panel-kicker">HISTORIA</span></div>
+          <div id="gameHistorySummary" class="game-history-summary">Brak zapisanych sesji.</div>
+        </section>
+      </section>
+
+      <!-- ANALYZER VIEW -->
+      <section id="view-analyzer" class="view">
+        <header class="view-header">
+          <h1>Analiza sieci</h1>
+          <p class="subtitle">Pomiar opóźnienia, jitteru i strat pakietów w czasie rzeczywistym.</p>
+        </header>
+
+        <div class="control-row">
+          <label class="field">
+            <span class="field-label">Cel</span>
+            <select id="targetSelect"></select>
+          </label>
+          <label class="field field-grow">
+            <span class="field-label">Własny adres / host</span>
+            <input id="customHost" type="text" placeholder="np. 185.60.112.157" />
+          </label>
+          <button id="fullTestBtn" class="btn btn-primary" type="button">Test automatyczny</button>
+          <button id="toggleMonitor" class="btn btn-primary">Start pomiaru</button>
+        </div>
+
+        <div class="info-strip">
+          <span id="connectionInfo">Połączenie: sprawdzanie…</span>
+        </div>
+
+        <div id="scanProgress" class="scan-progress" aria-live="polite">
+          <div class="scan-orb"><div class="scan-liquid"></div><strong id="scanPercent">0%</strong></div>
+          <div class="scan-copy"><strong id="scanProgressTitle">Gotowy do testu</strong><span id="scanProgressText">Sprawdzę stabilność połączenia przez 12 sekund.</span></div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span class="metric-label">Bieżące</span>
+            <span class="metric-value" id="mCurrent">—</span>
+            <span class="metric-unit">ms</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Średnia</span>
+            <span class="metric-value" id="mAvg">—</span>
+            <span class="metric-unit">ms</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Jitter</span>
+            <span class="metric-value" id="mJitter">—</span>
+            <span class="metric-unit">ms</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Min / Max</span>
+            <span class="metric-value" id="mMinMax">— / —</span>
+            <span class="metric-unit">ms</span>
+          </div>
+          <div class="metric-card metric-card-loss">
+            <span class="metric-label">Utrata pakietów</span>
+            <span class="metric-value" id="mLoss">—</span>
+            <span class="metric-unit">%</span>
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <div class="panel-title">Opóźnienie — ostatnie 24 godziny / bieżące próbki</div>
+          <svg id="pingChart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="action-row diagnostics-row">
+          <button id="traceBtn" class="btn btn-outline">Traceroute celu</button>
+          <button id="speedBtn" class="btn btn-outline">Test przepustowości</button>
+          <button id="overlayBtn" class="btn btn-outline">Pokaż overlay ping</button>
+          <button id="saveBaselineBtn" class="btn btn-outline">Zapisz wynik PRZED</button>
+          <button id="exportCurrentBtn" class="btn btn-ghost">Eksport JSON</button>
+          <button id="exportCurrentCsvBtn" class="btn btn-ghost">Eksport CSV</button>
+          <button id="reportBtn" class="btn btn-ghost">Raport dla ISP</button>
+        </div>
+        <pre id="diagnosticOutput" class="diagnostic-output"></pre>
+        <div id="networkRecommendation" class="network-recommendation">Uruchom test, aby otrzymać rekomendację.</div>
+        <section id="fullTestReport" class="full-test-report" hidden aria-live="polite">
+          <div class="full-test-heading"><div><p class="eyebrow">TurekBoost v1.1 Beta</p><h2>Raport testu automatycznego</h2></div><span id="fullTestStatus" class="status-dot-label">GOTOWY</span></div>
+          <p id="fullTestConnection" class="full-test-connection"></p>
+          <div class="full-test-metrics">
+            <div><small>Średni ping</small><strong id="fullTestPing">—</strong><em>ms</em></div>
+            <div><small>Jitter / loss</small><strong id="fullTestStability">—</strong><em>ms / %</em></div>
+            <div><small>Pobieranie</small><strong id="fullTestSpeed">—</strong><em>Mb/s</em></div>
+            <div><small>Wysyłanie</small><strong id="fullTestUpload">—</strong><em>Mb/s</em></div>
+            <div><small>Trasa</small><strong id="fullTestTrace">—</strong><em>status</em></div>
+            <div><small>Jakość</small><strong id="fullTestQuality">—</strong><em>ocena</em></div>
+          </div>
+          <div id="fullTestRecommendation" class="full-test-recommendation"></div>
+          <div id="optimizationComparison" class="optimization-comparison" hidden></div>
+          <pre id="fullTestTraceOutput" class="full-test-trace"></pre>
+        </section>
+        <div id="routePanel" class="route-panel">
+          <div class="panel-title">Gdzie jest problem?</div>
+          <p id="routeDiagnosis" class="route-diagnosis">Uruchom traceroute, aby przeanalizować trasę.</p>
+          <div id="routeHops" class="route-hops"></div>
+        </div>
+      </section>
+
+      <!-- BOOST VIEW -->
+      <section id="view-boost" class="view">
+        <header class="boost-hero">
+          <div>
+            <p class="eyebrow">Centrum wydajności</p>
+            <h1>PC Boost</h1>
+            <p class="subtitle">Dostosuj komputer do grania i obserwuj jego zasoby w czasie rzeczywistym.</p>
+          </div>
+          <div class="boost-hero-art" aria-hidden="true"><span></span><i></i><b></b></div>
+        </header>
+
+        <div class="boost-tabs" role="tablist" aria-label="Narzędzia PC Boost">
+          <button class="boost-tab active" type="button" data-boost-tab="system">Optymalizacja systemu</button>
+          <button class="boost-tab" type="button" data-boost-tab="ram">RAM Cleaner</button>
+        </div>
+
+        <div id="ram-cleaner-panel" class="ram-cleaner-panel" hidden>
+          <div class="ram-summary">
+            <div class="ram-summary-heading"><strong>RAM Cleaner</strong><span id="ramCleanStatus" class="ram-status">Gotowy do czyszczenia</span><span id="ramLastCleanup">Jeszcze nie czyszczono</span><button id="cleanRamButton" class="btn btn-danger" type="button">Wyczyść RAM</button></div>
+            <p class="ram-clean-info">Po kliknięciu zwolnię nieużywaną pamięć roboczą aplikacji. Nie zamknę programów ani nie usunę Twoich plików.</p>
+            <div class="ram-bar"><span id="ramBarUsed"></span></div>
+            <div class="ram-legend"><span><b></b> Używana <strong id="ramUsedLabel">—</strong></span><span><b></b> Wolna <strong id="ramFreeLabel">—</strong></span><span id="ramTotalLabel">— RAM łącznie</span></div>
+          </div>
+          <section class="ram-panel ram-routine-panel"><div class="ram-panel-heading"><strong>Automatyczne czyszczenie</strong><span id="ramAutoSwitch" class="boost-switch" role="switch" aria-checked="false" tabindex="0"></span></div><p>Wyczyść pamięć po uruchomieniu pomiaru sieci, aby gra miała więcej dostępnych zasobów.</p><label class="ram-radio"><input type="radio" name="ramRoutine" checked /> po uruchomieniu gry lub testu</label><label class="ram-radio"><input type="radio" name="ramRoutine" /> gdy pamięć przekroczy 80%</label></section>
+        </div>
+
+        <div class="boost-profile-bar">
+          <div><strong>Profil wydajności</strong><span id="boostProfileStatus">Wybierz profil dla swojego scenariusza.</span></div>
+          <div class="boost-profiles">
+            <button class="boost-profile" type="button" data-profile="default">Domyślny</button>
+            <button class="boost-profile" type="button" data-profile="high">Wysoka wydajność</button>
+            <button class="boost-profile active" type="button" data-profile="custom">Własny</button>
+          </div>
+        </div>
+
+        <div class="metric-grid metric-grid-3 boost-metrics">
+          <div class="metric-card">
+            <span class="metric-label">Obciążenie CPU</span>
+            <span class="metric-value" id="bCpu">—</span>
+            <span class="metric-unit">%</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Pamięć RAM</span>
+            <span class="metric-value" id="bMem">—</span>
+            <span class="metric-unit">GB</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Zajętość RAM</span>
+            <span class="metric-value" id="bMemPct">—</span>
+            <span class="metric-unit">%</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Temperatura CPU</span>
+            <span class="metric-value" id="bCpuTemp">—</span>
+            <span class="metric-unit">°C</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Temperatura GPU</span>
+            <span class="metric-value" id="bGpuTemp">—</span>
+            <span class="metric-unit">°C</span>
+          </div>
+        </div>
+
+        <div class="boost-grid">
+          <article class="boost-card" data-boost-action="highPerf" data-help-title="Maksymalna wydajność gier" data-help="Przełącza plan zasilania Windows na Wysoka wydajność. Komputer mniej oszczędza energię, ale szybciej reaguje podczas gry."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">⚡</span><span class="boost-switch"></span><strong>Maksymalna wydajność gier</strong><small>Ustawia plan zasilania Windows na wysoką wydajność.</small><u>Wymaga administratora</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="tcp" data-help-title="Stabilność połączenia TCP" data-help="Ustawia zalecane parametry obsługi połączeń TCP. Może pomóc ograniczyć opóźnienia i poprawić stabilność internetu w grach."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">⌁</span><span class="boost-switch"></span><strong>Stabilność połączenia TCP</strong><small>Ustawia zalecane parametry TCP dla internetu.</small><u>Wykonaj optymalizację</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="dns" data-help-title="Wyczyść pamięć DNS" data-help="Czyści zapamiętane adresy serwerów. Przydaje się, gdy strona lub serwer gry zmienił adres albo nie odpowiada."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">◌</span><span class="boost-switch"></span><strong>Wyczyść pamięć DNS</strong><small>Usuwa lokalny cache DNS komputera.</small><u>Bez trwałej zmiany</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Brak cofania</button></article>
+          <article class="boost-card boost-card-live" data-boost-action="activeCores" data-help-title="Aktywne rdzenie procesora" data-help="Ustawia minimalną liczbę aktywnych rdzeni na 100% podczas pracy z zasilaczem. Zwiększa gotowość CPU, ale może zużyć więcej energii."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">▦</span><span class="boost-switch"></span><strong>Aktywne rdzenie CPU</strong><small>Utrzymuje wszystkie rdzenie gotowe do pracy.</small><u>Wymaga administratora</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="gameBar" data-help-title="Nagrywanie Game Bar" data-help="Wyłącza automatyczne nagrywanie i przechwytywanie obrazu przez Xbox Game Bar, aby zwolnić część zasobów w tle."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">▣</span><span class="boost-switch"></span><strong>Wyłącz nagrywanie Game Bar</strong><small>Wyłącza nagrywanie klipów w tle podczas gry.</small><u>Można cofnąć</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="networkSaving" data-help-title="Oszczędzanie energii sieci" data-help="Wyłącza oszczędzanie energii karty sieciowej w planie zasilania. Może poprawić stabilność Wi-Fi lub Ethernetu kosztem energii."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">⌁</span><span class="boost-switch"></span><strong>Wyłącz oszczędzanie sieci</strong><small>Priorytetem jest stabilność połączenia.</small><u>Wymaga administratora</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="lastAccess" data-help-title="Znacznik ostatniego dostępu NTFS" data-help="Wyłącza zapisywanie czasu ostatniego odczytu plików. Zmniejsza liczbę drobnych zapisów na dysku, ale zmienia standardowe zachowanie Windows."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">◷</span><span class="boost-switch"></span><strong>Wyłącz znacznik NTFS</strong><small>Ogranicza dodatkowe zapisy metadanych plików.</small><u>Opcja zaawansowana</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="superfetch" data-help-title="SuperFetch" data-help="Zatrzymuje usługę SysMain, która przygotowuje często używane aplikacje. Na niektórych komputerach może to zmniejszyć pracę dysku podczas gry."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">▤</span><span class="boost-switch"></span><strong>Wyłącz SuperFetch</strong><small>Zatrzymuje usługę SysMain w tle.</small><u>Opcja zaawansowana</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="indexing" data-help-title="Indeksowanie plików" data-help="Zatrzymuje usługę Windows Search, która indeksuje pliki dla szybszego wyszukiwania. Może zmniejszyć aktywność dysku, ale wyszukiwanie będzie wolniejsze."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">⌕</span><span class="boost-switch"></span><strong>Wyłącz indeksowanie plików</strong><small>Ogranicza pracę usługi Windows Search.</small><u>Opcja zaawansowana</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="keyboard" data-help-title="Szybsza reakcja klawiatury" data-help="Ustawia najkrótsze opóźnienie powtarzania klawiszy i maksymalną szybkość powtarzania. To ustawienie dotyczy całego profilu użytkownika."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">⌨</span><span class="boost-switch"></span><strong>Szybsza reakcja klawiatury</strong><small>Zmniejsza opóźnienie powtarzania klawiszy.</small><u>Ustawienie użytkownika</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="inputLag" data-help-title="Mniejsze opóźnienie myszy" data-help="Wyłącza przyspieszenie myszy w Windows, dzięki czemu ruch kursora jest bardziej przewidywalny. Zmiana dotyczy także pracy poza grami."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">⊙</span><span class="boost-switch"></span><strong>Mniejsze opóźnienie myszy</strong><small>Wyłącza systemowe przyspieszenie wskaźnika.</small><u>Ustawienie użytkownika</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="backgroundPriority" data-help-title="Priorytet dla aplikacji" data-help="Ustawia Windows tak, aby aktywna aplikacja dostawała więcej uwagi niż procesy działające w tle. Wpływa na cały system i wymaga administratora."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">▰</span><span class="boost-switch"></span><strong>Priorytet dla aktywnej gry</strong><small>Ogranicza wpływ procesów działających w tle.</small><u>Opcja zaawansowana</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+          <article class="boost-card" data-boost-action="ultimatePerf" data-help-title="Ultimate Performance" data-help="Tworzy i aktywuje plan Ultimate Performance Windows. Minimalizuje oszczędzanie energii, dlatego najlepiej używać go przy komputerze podłączonym do zasilania."><button class="boost-card-toggle" type="button"><span class="boost-card-icon">◈</span><span class="boost-switch"></span><strong>Ultimate Performance</strong><small>Włącza maksymalny plan zasilania Windows.</small><u>Wymaga administratora</u></button><button class="boost-help" type="button">i</button><button class="boost-undo" type="button" disabled>Cofnij</button></article>
+        </div>
+        <div class="boost-action-row">
+          <p id="actionFeedback" class="action-feedback"></p>
+          <div class="boost-backup-actions"><button class="btn btn-outline" id="backupBoostBtn" type="button">Zapisz ustawienia</button><button class="btn btn-outline" id="restoreBoostBtn" type="button">Cofnij zmiany</button></div>
+          <button class="btn btn-ghost" id="actRefresh" type="button">Odśwież dane</button>
+        </div>
+
+        <div class="chart-panel">
+          <div class="panel-title">Procesy wg zużycia pamięci</div>
+          <table class="proc-table">
+            <thead>
+              <tr>
+                <th>Proces</th>
+                <th>PID</th>
+                <th>RAM</th>
+                <th>CPU</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="procBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- HISTORY VIEW -->
+      <section id="view-history" class="view">
+        <header class="view-header">
+          <h1>Historia sesji</h1>
+          <p class="subtitle">Zachowane pomiary do porównania i pokazania dostawcy internetu.</p>
+        </header>
+        <div class="history-toolbar">
+          <button id="compareBtn" class="btn btn-primary">Porównaj wybrane</button>
+          <button id="clearHistoryBtn" class="btn btn-danger-outline">Usuń całą historię</button>
+          <span id="historyFeedback" class="action-feedback"></span>
+        </div>
+        <div id="historyList" class="history-list"></div>
+        <div class="chart-panel compare-panel">
+          <div class="panel-title">Porównanie sesji</div>
+          <div id="compareSummary" class="compare-summary">Wybierz dwie sesje.</div>
+          <svg id="compareChart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="adminRequiredModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="adminRequiredTitle">
+    <div class="game-mode-modal admin-required-modal">
+      <button id="closeAdminRequired" class="modal-close" aria-label="Zamknij">×</button>
+      <p class="eyebrow">Uprawnienia Windows</p>
+      <h2 id="adminRequiredTitle">Wymagane uprawnienia administratora</h2>
+      <p class="modal-subtitle">Ta funkcja zmienia ustawienia systemu. Zamknij TurekBoost i uruchom aplikację jako administrator, klikając plik prawym przyciskiem myszy i wybierając „Uruchom jako administrator”.</p>
+      <div class="modal-actions"><button id="closeAdminRequiredButton" class="btn btn-ghost">Rozumiem</button><button id="restartAsAdminButton" class="btn btn-primary">Uruchom jako administrator</button></div>
+    </div>
+  </div>
+
+  <div id="boostHelpModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="boostHelpTitle">
+    <div class="game-mode-modal boost-help-modal">
+      <button id="closeBoostHelp" class="modal-close" aria-label="Zamknij">×</button>
+      <p class="eyebrow">Proste wyjaśnienie</p>
+      <h2 id="boostHelpTitle">Jak działa ta opcja?</h2>
+      <p id="boostHelpText" class="modal-subtitle"></p>
+      <div class="modal-actions"><button id="closeBoostHelpButton" class="btn btn-primary">Rozumiem</button></div>
+    </div>
+  </div>
+
+  <div id="gameModeModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="gameModeTitle">
+    <div class="game-mode-modal">
+      <button id="closeGameMode" class="modal-close" aria-label="Zamknij">×</button>
+      <p class="eyebrow">Bezpieczna optymalizacja</p>
+      <h2 id="gameModeTitle">Włączyć Game Mode?</h2>
+      <p id="gameModeDescription" class="modal-subtitle">TurekBoost zastosuje ustawienia tylko do wykrytego procesu gry.</p>
+      <div class="mode-change-list">
+        <div class="mode-change mode-on"><span>+</span><div><strong>Wysoki priorytet procesu</strong><small>Gra dostanie wyższy priorytet CPU w Windows.</small></div></div>
+        <div class="mode-change mode-off"><span>•</span><div><strong>Brak wyłączania aplikacji</strong><small>Game Mode nie zamknie OneDrive, aktualizacji ani innych programów w tle.</small></div></div>
+        <div class="mode-change mode-off"><span>•</span><div><strong>Brak zmian systemowych</strong><small>Nie zmieni rejestru, sterowników ani ustawień sieci.</small></div></div>
+      </div>
+      <div class="modal-actions">
+        <button id="cancelGameMode" class="btn btn-ghost">Anuluj</button>
+        <button id="confirmGameMode" class="btn btn-primary">Potwierdź i włącz</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="networkResultModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="networkResultTitle">
+    <div class="network-result-modal">
+      <button id="closeNetworkResult" class="modal-close" aria-label="Zamknij">×</button>
+      <p class="eyebrow">Analiza sieci</p>
+      <h2 id="networkResultTitle">Test jakości sieci wykonany</h2>
+      <div class="result-heading"><span id="networkResultQuality" class="quality-badge">—</span><span id="networkResultHost" class="modal-subtitle"></span></div>
+      <div class="result-metrics">
+        <div><small>Średni ping</small><strong id="resultAvg">—</strong><em>ms</em></div>
+        <div><small>Jitter</small><strong id="resultJitter">—</strong><em>ms</em></div>
+        <div><small>Utrata pakietów</small><strong id="resultLoss">—</strong><em>%</em></div>
+      </div>
+      <div id="networkResultComparison" class="optimization-comparison" hidden></div>
+      <p id="networkResultMessage" class="result-message"></p>
+      <div class="modal-actions">
+        <button id="closeNetworkResultButton" class="btn btn-ghost">Zamknij</button>
+        <button id="openResultHistory" class="btn btn-primary">Zobacz historię sesji</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="speedtestModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="speedtestTitle">
+    <section class="speedtest-panel">
+      <button id="closeSpeedtest" class="modal-close" aria-label="Zamknij">×</button>
+      <p class="eyebrow">Skanowanie połączenia</p>
+      <h2 id="speedtestTitle">Sprawdzam szybkość internetu</h2>
+      <p id="speedtestStatus" class="speedtest-status" aria-live="polite">Przygotowuję bezpieczny test HTTPS…</p>
+      <div class="speedtest-orb" aria-hidden="true"><span class="speedtest-orb-ring"></span><strong id="speedtestPercent">0%</strong></div>
+      <div class="speedtest-metrics">
+        <div class="speedtest-metric download"><span>Download</span><strong id="speedtestDownload">—</strong><em>Mb/s</em><small id="speedtestDownloadStatus">Oczekiwanie</small></div>
+        <div class="speedtest-metric upload"><span>Upload</span><strong id="speedtestUpload">—</strong><em>Mb/s</em><small id="speedtestUploadStatus">Oczekiwanie</small></div>
+      </div>
+      <div class="speedtest-info">
+        <span><b>Typ połączenia</b><strong id="speedtestConnectionType">Brak danych</strong></span>
+        <span><b>Adres</b><strong id="speedtestConnectionAddress">Brak danych</strong></span>
+      </div>
+      <div class="speedtest-actions">
+        <button id="cancelSpeedtest" class="btn btn-ghost" type="button">Anuluj</button>
+        <button id="viewSpeedtestResults" class="btn btn-primary" type="button" disabled>Zobacz wyniki</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+node_modules/
+
+.env
+.env.*
+!.env.example
+
+# Electron build output
+dist/
+
+# Local application data
+*.log
+.DS_Store
